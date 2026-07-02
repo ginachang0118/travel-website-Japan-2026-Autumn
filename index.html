@@ -1,18 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <title>我的旅遊網站</title>
-</head>
-<body>
-    <h1>🍁 東京富士山旅遊</h1>
-    <p>這是我用 GitHub 做的第一個網站</p>
+  <meta charset="UTF-8">
+  <title>旅遊行程網站</title>
 
-    <h2>Day 1</h2>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #34495e;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    nav button:hover {
+      background: #1abc9c;
+    }
+
+    .content {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>✈️ 我的旅遊行程</h1>
+</header>
+
+<nav>
+  <button onclick="showSection('day1')">Day 1</button>
+  <button onclick="showSection('day2')">Day 2</button>
+  <button onclick="showSection('transport')">交通</button>
+</nav>
+
+<div class="content">
+
+  <div id="day1" class="section active">
+    <h2>Day 1 - 抵達</h2>
     <ul>
-        <li>成田機場 → 飯店</li>
-        <li>晚餐：居酒屋</li>
+      <li>抵達機場</li>
+      <li>前往飯店</li>
+      <li>晚餐：居酒屋</li>
     </ul>
+  </div>
+
+  <div id="day2" class="section">
+    <h2>Day 2 - 市區觀光</h2>
+    <ul>
+      <li>淺草寺</li>
+      <li>晴空塔</li>
+      <li>秋葉原</li>
+    </ul>
+  </div>
+
+  <div id="transport" class="section">
+    <h2>交通方式</h2>
+    <ul>
+      <li>成田機場 → 東京：NEX 或巴士</li>
+      <li>市內：地鐵為主</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  function showSection(id) {
+    let sections = document.querySelectorAll('.section');
+    sections.forEach(sec => sec.classList.remove('active'));
+
+    document.getElementById(id).classList.add('active');
+  }
+</script>
 
 </body>
 </html>

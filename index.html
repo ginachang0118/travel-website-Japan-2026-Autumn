@@ -115,10 +115,12 @@
 
     * 讓 4 個景點在同一排（4 等分） */
     .spot-gallery {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 關鍵：強制分成 4 欄排在同一排 */
-      gap: 15px;                             /* 彼此間距 */
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important; /* 強制切成 4 格橫排 */
+      gap: 15px;                                         /* 圖片之間的空隙 */
       margin-top: 15px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .spot-item {

@@ -53,21 +53,35 @@
     }
 
     /* 住宿卡片樣式 */
-    .hotel-card {
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 15px;
-      background: #fafafa;
+    /* 統一設定圖片的寬高與裁切 */
+    .hotel-png {
+      width: 100%;           /* 寬度撐滿容器 */
+      height: 200px;         /* 固定一致的高度 */
+      object-fit: cover;     /* 關鍵：保持比例填滿並自動裁切多餘邊緣，防止照片被壓扁或拉長 */
+      border-radius: 6px;    /* 微圓角更美觀 */
+      display: block;
     }
 
-    .hotel-img {
-      width: 100%;
-      max-height: 350px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-top: 10px;
+    /* 包含圖片與說明的容器排版 */
+    .hotel-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* 自動並排，手機版自動換行 */
+      gap: 15px;             /* 圖片之間的間隔 */
+      margin-top: 15px;
     }
+
+    .hotel-item {
+      margin: 0;
+      text-align: center;
+    }
+
+    .hotel-item figcaption {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #555;
+      font-weight: bold;
+    }
+    
 
     .hotel-link {
       display: inline-block;
@@ -109,21 +123,27 @@
   <div id="hotel" class="section active">
     <h2>住宿地點</h2>
     
-    <div class="hotel-card">
-      <h3>淺草中央酒店 (Asakusa Central Hotel)</h3>
-      <div>
-        <!-- 網站連結 -->
-        <a class="hotel-link" style="background:#27ae60;" href="https://www.pelican.co.jp/asakusacentralhotel/index.html" target="_blank">飯店連結</a>
-      </div>
-      <!-- 照片位置：放網路圖片網址，或你資料夾裡的圖片檔名 (例如 hotel1.jpg) -->
-      <img class="hotel-png" src="image/hotel_outside.png" alt="飯店外觀">
-      <img class="hotel-png" src="image/hotel_room.png" alt="飯店客房">
-      <img class="hotel-png" src="image/hotel_breakfast.png" alt="飯店早餐">
-      <img class="hotel-png" src="image/hotel_address_map.png" alt="飯店位置">
-      <!-- <div> -->
-        <!-- 網站連結 -->
-        <!-- <a class="hotel-link" style="background:#27ae60;" href="https://www.pelican.co.jp/asakusacentralhotel/index.html" target="_blank">飯店連結</a>
-      </div> -->
+    <div class="hotel-gallery">
+      <figure class="hotel-item">
+        <img class="hotel-png" src="image/hotel_outside.png" alt="飯店外觀">
+        <figcaption>飯店外觀</figcaption>
+      </figure>
+
+      <figure class="hotel-item">
+        <img class="hotel-png" src="image/hotel_room.png" alt="飯店客房">
+        <figcaption>飯店客房</figcaption>
+      </figure>
+
+      <figure class="hotel-item">
+        <img class="hotel-png" src="image/hotel_breakfast.png" alt="飯店早餐">
+        <figcaption>飯店早餐</figcaption>
+      </figure>
+
+      <figure class="hotel-item">
+        <img class="hotel-png" src="image/hotel_address_map.png" alt="飯店位置">
+        <figcaption>飯店位置</figcaption>
+      </figure>
+    </div>
     </div>
   </div>
 

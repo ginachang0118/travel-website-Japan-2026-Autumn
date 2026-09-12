@@ -112,6 +112,44 @@
       color: #666;            /* 灰色字體 */
       margin-left: 8px;       /* 與前面景點名稱留一點間距 */
     }
+
+    * 讓 4 個景點在同一排（4 等分） */
+    .spot-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 關鍵：強制分成 4 欄排在同一排 */
+      gap: 15px;                             /* 彼此間距 */
+      margin-top: 15px;
+    }
+
+    .spot-item {
+      margin: 0;
+      text-align: center;                    /* 文字置中 */
+    }
+
+    /* 上方文字樣式：粗體標題 + 一般文字在同一行 */
+    .spot-item figcaption {
+      margin-bottom: 8px;                    /* 文字與下方照片的距離 */
+      font-size: 13px;
+      color: #333;
+    }
+
+    .spot-item figcaption strong {
+      font-weight: bold;
+    }
+
+    .spot-item figcaption span {
+      color: #666;
+      font-size: 12px;
+    }
+
+    /* 下方圖片：跟飯店一樣強制統一大小、不變形 */
+    .spot-png {
+      width: 100%;
+      height: 140px;                         /* 統一高度（可依喜好調整，如 150px） */
+      object-fit: cover;                     /* 關鍵：填滿且不壓扁 */
+      border-radius: 6px;
+      display: block;
+    }
   </style>
 </head>
 
@@ -168,41 +206,28 @@
     <div class="nearby-spots" style="margin-top: 30px; border-top: 1px solid #e0e0e0; padding-top: 20px;">
     <h3>📍 飯店周邊景點</h3>
 
-    <div class="spot-grid">
-      <!-- 景點 1 -->
-      <div class="spot-card">
-        <div class="spot-info">
-          <h4>淺草寺 / 雷門 <span class="spot-desc">步行約 3-5 分鐘</span></h4>      
-        </div>
-        <img class="spot-img" src="image/spot_sensoji.png" alt="淺草寺雷門">
-      </div>
+    <!-- 沿用類似 hotel-gallery 的容器 -->
+    <div class="spot-gallery">
 
-      <!-- 景點 2 -->
-      <div class="spot-card">
-        <div class="spot-info">
-          <h4>仲見世商店街</h4>
-          <p>步行約 3 分鐘（採買伴手禮）</p>
-        </div>
-        <img class="spot-img" src="image/spot_nakamise.png" alt="仲見世商店街">
-      </div>
+      <figure class="spot-item">
+        <figcaption><strong>淺草寺 / 雷門</strong> <span>步行約 3-5 分鐘</span></figcaption>
+        <img class="spot-png" src="image/spot_sensoji.png" alt="淺草寺雷門">
+      </figure>
 
-      <!-- 景點 3 -->
-      <div class="spot-card">
-        <div class="spot-info">
-          <h4>東京晴空塔</h4>
-          <p>電車 10 分鐘 / 步行 20 分鐘</p>
-        </div>
-        <img class="spot-img" src="image/spot_skytree.png" alt="東京晴空塔">
-      </div>
+      <figure class="spot-item">
+        <figcaption><strong>仲見世商店街</strong> <span>步行約 3 分鐘</span></figcaption>
+        <img class="spot-png" src="image/spot_nakamise.png" alt="仲見世商店街">
+      </figure>
 
-      <!-- 景點 4 -->
-      <div class="spot-card">
-        <div class="spot-info">
-          <h4>隅田公園</h4>
-          <p>步行約 8 分鐘（散步賞景）</p>
-        </div>
-        <img class="spot-img" src="image/spot_sumida.png" alt="隅田公園">
-      </div>
+      <figure class="spot-item">
+        <figcaption><strong>東京晴空塔</strong> <span>車程約 10 分鐘</span></figcaption>
+        <img class="spot-png" src="image/spot_skytree.png" alt="東京晴空塔">
+      </figure>
+
+      <figure class="spot-item">
+        <figcaption><strong>隅田公園</strong> <span>步行約 8 分鐘</span></figcaption>
+        <img class="spot-png" src="image/spot_sumida.png" alt="隅田公園">
+      </figure>
   
 
     </div>

@@ -1,284 +1,339 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>東京富士山旅遊</title>
+
   <style>
+
     /* =========================
        基本設定
     ========================= */
+
     * {
       box-sizing: border-box;
     }
+
     body {
       font-family: Arial, "Noto Sans TC", sans-serif;
       margin: 0;
       background: #f5f5f5;
       color: #333;
     }
+
+
     /* =========================
        頁面標題
     ========================= */
+
     header {
       background: #2c3e50;
       color: white;
       padding: 20px;
       text-align: center;
     }
+
     header h1 {
       margin: 0;
       font-size: 28px;
     }
+
+
     /* =========================
        導覽列
     ========================= */
+
     nav {
       display: flex;
       justify-content: center;
       background: #34495e;
+
       /* 手機版可以左右滑動 */
       overflow-x: auto;
       white-space: nowrap;
-      /* 隱藏部分瀏覽器的捲軸 */
+
+      /* 隱藏捲軸 */
       scrollbar-width: none;
     }
+
     nav::-webkit-scrollbar {
       display: none;
     }
+
     nav button {
       flex: 0 0 auto;
+
       background: none;
       border: none;
+
       color: white;
+
       padding: 13px 18px;
+
       cursor: pointer;
+
       font-size: 15px;
+
       transition: background 0.2s;
     }
+
+    /* 滑鼠移過去 */
     nav button:hover {
       background: #1abc9c;
     }
 
-    nav button:hover {
-      background: #1abc9c;
-    }
-
-    /* 選中時持續變色 */
+    /* 選中的按鈕 */
     nav button.active {
-      background: #1abc9c; /* 也可以換成其他你喜歡的顯眼顏色，例如 #e67e22 */
+      background: #1abc9c;
       font-weight: bold;
     }
+
+
     /* =========================
        主要內容區域
     ========================= */
+
     .content {
       width: min(100% - 40px, 1000px);
+
       margin: 30px auto;
+
       padding: 25px;
+
       background: white;
+
       border-radius: 10px;
+
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
+
+
     /* =========================
        Section
     ========================= */
+
     .section {
       display: none;
     }
+
     .section.active {
       display: block;
     }
+
     .section h2 {
       margin-top: 0;
       color: #2c3e50;
     }
+
+
     /* =========================
-       通用圖片設定
-       
-       以後新增圖片，
-       優先使用 class="travel-img"
+       通用圖片
     ========================= */
+
     .travel-img {
       width: 100%;
       height: 180px;
+
       object-fit: cover;
+
       display: block;
+
       border-radius: 8px;
+
       transition: transform 0.2s;
     }
-    /* 滑鼠移到圖片上時稍微放大 */
+
     .travel-img:hover {
       transform: scale(1.02);
     }
+
+
     /* =========================
        飯店圖片
     ========================= */
+
     .hotel-gallery {
       display: grid;
+
       grid-template-columns:
         repeat(auto-fit, minmax(200px, 1fr));
+
       gap: 15px;
+
       margin-top: 20px;
     }
+
     .hotel-item {
       margin: 0;
     }
+
     .hotel-item .travel-img {
       height: 200px;
     }
+
     .hotel-item figcaption {
       margin-top: 7px;
+
       text-align: center;
+
       font-size: 14px;
+
       color: #555;
+
       font-weight: bold;
     }
+
+
     /* =========================
        飯店連結
     ========================= */
+
     .hotel-links {
       margin-top: 20px;
     }
+
     .hotel-link {
       display: inline-block;
+
       padding: 9px 15px;
+
       background: #27ae60;
+
       color: white;
+
       text-decoration: none;
+
       border-radius: 5px;
+
       font-size: 14px;
+
       transition: background 0.2s;
     }
+
     .hotel-link:hover {
       background: #219150;
     }
+
+
     /* =========================
        飯店周邊景點
     ========================= */
+
     .nearby-spots {
       margin-top: 35px;
+
       border-top: 1px solid #e0e0e0;
+
       padding-top: 25px;
     }
+
     .nearby-spots h3 {
       margin-top: 0;
+
       color: #2c3e50;
     }
-    /* 景點 Grid */
+
+
+    /* =========================
+       景點 Grid
+    ========================= */
+
     .spot-gallery {
       display: grid;
+
       grid-template-columns:
         repeat(4, 1fr);
+
       gap: 15px;
+
       margin-top: 20px;
     }
+
     .spot-item {
       margin: 0;
     }
+
     .spot-item figcaption {
       margin-bottom: 8px;
+
       text-align: center;
+
       font-size: 13px;
+
       color: #333;
     }
+
     .spot-item figcaption strong {
       font-weight: bold;
     }
+
     .spot-item figcaption span {
       color: #777;
+
       font-size: 12px;
     }
+
     .spot-item .travel-img {
       height: 140px;
     }
-    /* =========================
-       行程清單
-    ========================= */
-    .section ul {
-      padding-left: 20px;
-      line-height: 1.8;
-    }
-    /* =========================
-       平板
-       螢幕小於 800px
-    ========================= */
-    @media (max-width: 800px) {
-      .spot-gallery {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .content {
-        width: min(100% - 30px, 1000px);
-        padding: 20px;
-      }
-    }
-    /* =========================
-       手機
-       螢幕小於 600px
-    ========================= */
-    @media (max-width: 600px) {
-      header {
-        padding: 16px;
-      }
-      header h1 {
-        font-size: 22px;
-      }
-      /* 導覽列改成靠左，
-         使用者可以左右滑 */
-      nav {
-        justify-content: flex-start;
-      }
-      nav button {
-        padding: 12px 15px;
-        font-size: 14px;
-      }
-      /* 主要內容 */
-      .content {
-        width: 100%;
-        margin: 0;
-        padding: 18px;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      /* 飯店圖片 */
-      .hotel-gallery {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-      .hotel-item .travel-img {
-        height: 220px;
-      }
-      /* 景點圖片 */
-      .spot-gallery {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      .spot-item .travel-img {
-        height: 200px;
-      }
-      /* 景點文字 */
-      .spot-item figcaption {
-        font-size: 14px;
-      }
-      .spot-item figcaption span {
-        font-size: 12px;
-      }
-    }
+
 
     /* =========================
-      行程表
+       一般清單
+    ========================= */
+
+    .section ul {
+      padding-left: 20px;
+
+      line-height: 1.8;
+    }
+
+
+    /* =========================
+       行程表外層
+       
+       這一層是為了手機版
+       可以左右滑動
+    ========================= */
+
+    .table-container {
+      width: 100%;
+
+      overflow-x: auto;
+
+      -webkit-overflow-scrolling: touch;
+
+      margin-top: 20px;
+    }
+
+
+    /* =========================
+       行程表
     ========================= */
 
     .schedule {
       width: 100%;
+
+      min-width: 700px;
+
+      table-layout: fixed;
+
       border-collapse: collapse;
-      margin-top: 20px;
+
+      margin-top: 0;
     }
 
-    /* 表頭 */
+
+    /* =========================
+       表頭
+    ========================= */
 
     .schedule th {
       background: #34495e;
+
       color: white;
 
       padding: 12px 10px;
@@ -288,7 +343,10 @@
       font-size: 14px;
     }
 
-    /* 每一格 */
+
+    /* =========================
+       每一格
+    ========================= */
 
     .schedule td {
       padding: 12px 10px;
@@ -300,49 +358,19 @@
       vertical-align: top;
     }
 
-    /* 滑鼠移過去 */
+
+    /* =========================
+       滑鼠移過去
+    ========================= */
 
     .schedule tr:hover td {
       background: #f8f9fa;
     }
 
-    /* 時間欄 */
 
-    .schedule .time {
-      width: 90px;
-
-      font-weight: bold;
-
-      color: #2c3e50;
-
-      white-space: nowrap;
-    }
-
-    /* 行程名稱 */
-
-    .schedule .activity {
-      font-weight: bold;
-    }
-
-    /* 地點 */
-
-    .schedule .location {
-      color: #555;
-    }
-
-    /* 備註 */
-
-    .schedule .note {
-      color: #777;
-
-      font-size: 13px;
-    }
-
-    .schedule {
-      width: 100%;
-      table-layout: fixed;
-      border-collapse: collapse;
-    }
+    /* =========================
+       行程表欄位寬度
+    ========================= */
 
     .schedule th:nth-child(1),
     .schedule td:nth-child(1) {
@@ -364,9 +392,42 @@
       width: 30%;
     }
 
+
+    /* =========================
+       時間
+    ========================= */
+
+    .schedule .time {
+      font-weight: bold;
+
+      color: #2c3e50;
+
+      white-space: nowrap;
+    }
+
+
+    /* =========================
+       行程名稱
+    ========================= */
+
+    .schedule .activity {
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       地點
+    ========================= */
+
+    .schedule .location {
+      color: #555;
+    }
+
     .schedule .location a {
       color: #3498db;
+
       text-decoration: none;
+
       font-weight: bold;
     }
 
@@ -374,25 +435,48 @@
       text-decoration: underline;
     }
 
+
     /* =========================
-      純圖片相簿區塊
+       備註
     ========================= */
+
+    .schedule .note {
+      color: #777;
+
+      font-size: 13px;
+    }
+
+
+    /* =========================
+       純圖片相簿
+    ========================= */
+
     .pure-gallery {
       display: grid;
-      /* 自動換行，每張圖片寬度至少 160px，不足時自適應填滿 */
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+
+      grid-template-columns:
+        repeat(auto-fill, minmax(160px, 1fr));
+
       gap: 12px;
+
       margin-top: 25px;
+
       padding-top: 20px;
+
       border-top: 1px solid #e5e5e5;
     }
 
     .pure-gallery img {
       width: 100%;
+
       height: 150px;
+
       object-fit: cover;
+
       border-radius: 8px;
+
       display: block;
+
       transition: transform 0.2s ease;
     }
 
@@ -400,706 +484,1593 @@
       transform: scale(1.03);
     }
 
-    /* 手機版設定 (小於 600px) */
+
+    /* =========================
+       平板
+       螢幕小於 800px
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .spot-gallery {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .content {
+        width: min(100% - 30px, 1000px);
+
+        padding: 20px;
+      }
+    }
+
+
+    /* =========================
+       手機
+       螢幕小於 600px
+    ========================= */
+
     @media (max-width: 600px) {
+
+      /* ---------- 標題 ---------- */
+
+      header {
+        padding: 16px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
+
+      /* ---------- 導覽列 ---------- */
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      nav button {
+        padding: 12px 15px;
+
+        font-size: 14px;
+      }
+
+
+      /* ---------- 主要內容 ---------- */
+
+      .content {
+        width: 100%;
+
+        margin: 0;
+
+        padding: 18px;
+
+        border-radius: 0;
+
+        box-shadow: none;
+      }
+
+
+      /* ---------- 飯店圖片 ---------- */
+
+      .hotel-gallery {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+      }
+
+      .hotel-item .travel-img {
+        height: 220px;
+      }
+
+
+      /* ---------- 景點 ---------- */
+
+      .spot-gallery {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+      }
+
+      .spot-item .travel-img {
+        height: 200px;
+      }
+
+      .spot-item figcaption {
+        font-size: 14px;
+      }
+
+      .spot-item figcaption span {
+        font-size: 12px;
+      }
+
+
+      /* ---------- 行程表 ---------- */
+
+      .table-container {
+        width: calc(100% + 0px);
+
+        overflow-x: auto;
+
+        margin-top: 20px;
+      }
+
+      .schedule {
+        min-width: 700px;
+      }
+
+
+      /* ---------- 相簿 ---------- */
+
       .pure-gallery {
-        grid-template-columns: repeat(2, 1fr); /* 手機上一列兩張 */
+        grid-template-columns:
+          repeat(2, 1fr);
+
         gap: 8px;
       }
+
       .pure-gallery img {
         height: 120px;
       }
     }
+
   </style>
 </head>
+
+
 <body>
+
+
   <!-- =========================
        網頁標題
   ========================== -->
+
   <header>
     <h1>2026 日本東京富士山</h1>
   </header>
+
+
   <!-- =========================
        導覽列
   ========================== -->
+
   <nav>
+
     <button onclick="showSection('rules', this)">
       旅遊公約
     </button>
+
     <button onclick="showSection('hotel', this)">
       住宿地點
     </button>
+
     <button onclick="showSection('day1', this)">
       第一天 (10/17 星期六)
     </button>
+
     <button onclick="showSection('day2', this)">
       第二天 (10/18 星期日)
     </button>
+
     <button onclick="showSection('day3', this)">
       第三天 (10/19 星期一)
     </button>
+
     <button onclick="showSection('day4', this)">
       第四天 (10/20 星期二)
     </button>
+
     <button onclick="showSection('day5', this)">
       第五天 (10/21 星期三)
     </button>
+
     <button onclick="showSection('transport', this)">
       行前通知
     </button>
+
   </nav>
+
+
   <!-- =========================
        主要內容
   ========================== -->
+
   <main class="content">
 
-<!-- =========================
-     旅遊公約
-========================== -->
-<section id="rules" class="section">
-  <h2>旅遊公約</h2>
-  <ul>
-    <li>一起開心旅行</li>
-    <li>準時集合</li>
-    <li>想上廁所、不舒服、肚子餓一定要說</li>
-    <li>離開群體至少讓兩個人知道</li>
-  </ul>
-</section>
-<!-- =========================
-     住宿
-========================== -->
-<section id="hotel" class="section active">
-  <h2>淺草中央酒店（Asakusa Central Hotel）</h2>
-  <!-- 飯店圖片 -->
-  <div class="hotel-gallery">
-    <figure class="hotel-item">
-      <img
-        class="travel-img"
-        src="image/hotel_outside.png"
-        alt="飯店外觀"
-      >
-      <figcaption>
-        飯店外觀
-      </figcaption>
-    </figure>
-    <figure class="hotel-item">
-      <img
-        class="travel-img"
-        src="image/hotel_room.png"
-        alt="客房"
-      >
-      <figcaption>
-        客房
-      </figcaption>
-    </figure>
-    <figure class="hotel-item">
-      <img
-        class="travel-img"
-        src="image/hotel_breakfast.png"
-        alt="早餐"
-      >
-      <figcaption>
-        早餐
-      </figcaption>
-    </figure>
-    <figure class="hotel-item">
-      <img
-        class="travel-img"
-        src="image/hotel_address_map.png"
-        alt="地理位置"
-      >
-      <figcaption>
-        地理位置
-      </figcaption>
-    </figure>
-  </div>
-  <!-- 飯店連結 -->
-  <div class="hotel-links">
-    <a
-      class="hotel-link"
-      href="https://www.pelican.co.jp/asakusacentralhotel/index.html"
-      target="_blank"
-    >
-      飯店官網 (請點我)
-    </a>
-  </div>
-  <!-- =========================
-       周邊景點
-  ========================== -->
-  <div class="nearby-spots">
-    <h3>
-      📍 飯店周邊景點
-    </h3>
-    <div class="spot-gallery">
-      <!-- 淺草寺 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>淺草寺 / 雷門</strong>
-          <span>步行約 3–5 分鐘</span>
-        </figcaption>
-        <img
-          class="travel-img"
-          src="image/hotel_spot_lemon.png"
-          alt="淺草寺雷門"
+
+    <!-- =========================
+         旅遊公約
+    ========================== -->
+
+    <section id="rules" class="section">
+
+      <h2>旅遊公約</h2>
+
+      <ul>
+        <li>一起開心旅行</li>
+        <li>準時集合</li>
+        <li>想上廁所、不舒服、肚子餓一定要說</li>
+        <li>離開群體至少讓兩個人知道</li>
+      </ul>
+
+    </section>
+
+
+    <!-- =========================
+         住宿
+    ========================== -->
+
+    <section id="hotel" class="section active">
+
+      <h2>淺草中央酒店（Asakusa Central Hotel）</h2>
+
+
+      <!-- 飯店圖片 -->
+
+      <div class="hotel-gallery">
+
+        <figure class="hotel-item">
+
+          <img
+            class="travel-img"
+            src="image/hotel_outside.png"
+            alt="飯店外觀"
+          >
+
+          <figcaption>
+            飯店外觀
+          </figcaption>
+
+        </figure>
+
+
+        <figure class="hotel-item">
+
+          <img
+            class="travel-img"
+            src="image/hotel_room.png"
+            alt="客房"
+          >
+
+          <figcaption>
+            客房
+          </figcaption>
+
+        </figure>
+
+
+        <figure class="hotel-item">
+
+          <img
+            class="travel-img"
+            src="image/hotel_breakfast.png"
+            alt="早餐"
+          >
+
+          <figcaption>
+            早餐
+          </figcaption>
+
+        </figure>
+
+
+        <figure class="hotel-item">
+
+          <img
+            class="travel-img"
+            src="image/hotel_address_map.png"
+            alt="地理位置"
+          >
+
+          <figcaption>
+            地理位置
+          </figcaption>
+
+        </figure>
+
+      </div>
+
+
+      <!-- 飯店連結 -->
+
+      <div class="hotel-links">
+
+        <a
+          class="hotel-link"
+          href="https://www.pelican.co.jp/asakusacentralhotel/index.html"
+          target="_blank"
         >
-      </figure>
-      <!-- 仲見世 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>仲見世商店街</strong>
-          <span>步行約 3 分鐘</span>
-        </figcaption>
+          飯店官網
+        </a>
+
+      </div>
+
+
+      <!-- =========================
+           周邊景點
+      ========================== -->
+
+      <div class="nearby-spots">
+
+        <h3>
+          📍 飯店周邊景點
+        </h3>
+
+
+        <div class="spot-gallery">
+
+
+          <!-- 淺草寺 -->
+
+          <figure class="spot-item">
+
+            <figcaption>
+              <strong>淺草寺 / 雷門</strong>
+              <span>步行約 3–5 分鐘</span>
+            </figcaption>
+
+            <img
+              class="travel-img"
+              src="image/hotel_spot_lemon.png"
+              alt="淺草寺雷門"
+            >
+
+          </figure>
+
+
+          <!-- 仲見世 -->
+
+          <figure class="spot-item">
+
+            <figcaption>
+              <strong>仲見世商店街</strong>
+              <span>步行約 3 分鐘</span>
+            </figcaption>
+
+            <img
+              class="travel-img"
+              src="image/hotel_spot_shopping_street.png"
+              alt="仲見世商店街"
+            >
+
+          </figure>
+
+
+          <!-- 晴空塔 -->
+
+          <figure class="spot-item">
+
+            <figcaption>
+              <strong>晴空塔</strong>
+              <span>車程約 10 分鐘 / 步行約 25 分鐘</span>
+            </figcaption>
+
+            <img
+              class="travel-img"
+              src="image/spot_skytree.jpg"
+              alt="晴空塔"
+            >
+
+          </figure>
+
+
+          <!-- 隅田公園 -->
+
+          <figure class="spot-item">
+
+            <figcaption>
+              <strong>隅田公園（賞楓,銀杏）</strong>
+              <span>步行約 15 分鐘</span>
+            </figcaption>
+
+            <img
+              class="travel-img"
+              src="image/spot_park.jpg"
+              alt="隅田公園"
+            >
+
+          </figure>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Day 1
+    ========================== -->
+
+    <section id="day1" class="section">
+
+      <h2>第一天 - 空降東京</h2>
+
+
+      <!-- 行程表外層 -->
+
+      <div class="table-container">
+
+        <table class="schedule">
+
+          <thead>
+
+            <tr>
+              <th>時間</th>
+              <th>行程</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+
+            <tr>
+
+              <td class="time">
+                08:30
+              </td>
+
+              <td class="activity">
+                集合＋報到＋托運行李
+              </td>
+
+              <td class="location">
+                桃園機場第一航廈
+              </td>
+
+              <td class="note">
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                10:40 - 15:05
+              </td>
+
+              <td class="activity">
+                搭飛機
+              </td>
+
+              <td class="location">
+                桃園機場 - 成田機場
+              </td>
+
+              <td class="note">
+                星宇（含飛機餐，3 hr 25 min）
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                15:05 - 16:20
+              </td>
+
+              <td class="activity">
+                入境日本＋拿行李
+              </td>
+
+              <td class="location">
+                成田機場第二航廈
+              </td>
+
+              <td class="note">
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                16:20 - 17:20
+              </td>
+
+              <td class="activity">
+                前往飯店
+              </td>
+
+              <td class="location">
+                成田機場 - 淺草中央酒店
+              </td>
+
+              <td class="note">
+                車程約 1 小時
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                17:20 - 17:50
+              </td>
+
+              <td class="activity">
+                放行李＋稍作休息
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/em9LS77c5fdCX7G39"
+                  target="_blank"
+                >
+                  淺草中央酒店
+                </a>
+
+              </td>
+
+              <td class="note">
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                17:50 - 19:30
+              </td>
+
+              <td class="activity">
+                晚餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/k6tCW8Mek6g8TV4P7"
+                  target="_blank"
+                >
+                  豬排店 Tonkatsu Toyama
+                </a>
+
+              </td>
+
+              <td class="note">
+                距飯店步行 10 分鐘
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                19:30 - 21:00
+              </td>
+
+              <td class="activity">
+                逛街、欣賞市容
+              </td>
+
+              <td class="location">
+                淺草寺＋超市
+              </td>
+
+              <td class="note">
+                都是步行，慢慢晃回飯店
+              </td>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Day 2
+    ========================== -->
+
+    <section id="day2" class="section">
+
+      <h2>第二天 - 富士山</h2>
+
+
+      <div class="table-container">
+
+        <table class="schedule">
+
+          <thead>
+
+            <tr>
+              <th>時間</th>
+              <th>行程</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+
+            <tr>
+
+              <td class="time">
+                06:50
+              </td>
+
+              <td class="activity">
+                集合
+              </td>
+
+              <td class="location">
+                飯店大廳
+              </td>
+
+              <td class="note">
+                早餐外帶
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                07:00 - 09:30
+              </td>
+
+              <td class="activity">
+                富士山取景點1
+              </td>
+
+              <td class="location">
+                飯店 - 新倉山淺間公園
+              </td>
+
+              <td class="note">
+                包車 (車程約 120 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                09:30 - 09:45
+              </td>
+
+              <td class="activity">
+                前往纜車
+              </td>
+
+              <td class="location">
+                新倉山淺間公園 - 富士山纜車（山腳）
+              </td>
+
+              <td class="note">
+                包車 (車程約 15 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                09:45 - 13:00
+              </td>
+
+              <td class="activity">
+                排隊搭纜車
+              </td>
+
+              <td class="location">
+                河口湖纜車 (來回)
+              </td>
+
+              <td class="note">
+                可憐的腿
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                13:00 - 14:30
+              </td>
+
+              <td class="activity">
+                午餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/HetTs7D1qXvDTVjd8"
+                  target="_blank"
+                >
+                  餺飥藏 （山梨縣名產＿不動麵）
+                </a>
+
+              </td>
+
+              <td class="note">
+                包車 (車程約 10 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                14:30 - 15:30
+              </td>
+
+              <td class="activity">
+                富士山取景點2＋採買伴手禮
+              </td>
+
+              <td class="location">
+                大石公園 / 河口湖生活館
+              </td>
+
+              <td class="note">
+                包車 (車程約 10 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                15:30 - 17:30
+              </td>
+
+              <td class="activity">
+                觀賞自然奇景＋吃點心
+              </td>
+
+              <td class="location">
+                忍野八海
+              </td>
+
+              <td class="note">
+                包車 (車程約 30 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                17:30 - 20:10
+              </td>
+
+              <td class="activity">
+                車上補眠
+              </td>
+
+              <td class="location">
+                車上
+              </td>
+
+              <td class="note">
+                包車 (車程約 160 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                20:10 - 21:30
+              </td>
+
+              <td class="activity">
+                晚餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/auGc1QMjdErZxuWNA"
+                  target="_blank"
+                >
+                  漢堡排 Monblanc
+                </a>
+
+              </td>
+
+              <td class="note">
+                距飯店步行 2 分鐘
+              </td>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- 純圖片展示區 -->
+
+      <div class="pure-gallery">
+
+        <img src="image/day2_mt.fuji.jpeg" alt="富士山">
+
+        <img src="image/day2_Houtou.jpg" alt="餺飥">
+
+        <img src="image/day2_新倉山淺間.jpeg" alt="新倉山淺間公園">
+
+        <img src="image/day2_忍野八海.jpg" alt="忍野八海">
+
+        <img src="image/day2_5-2.jpg" alt="富士山景點">
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Day 3
+    ========================== -->
+
+    <section id="day3" class="section">
+
+      <h2>第三天 - 市區觀光</h2>
+
+
+      <div class="table-container">
+
+        <table class="schedule">
+
+          <thead>
+
+            <tr>
+              <th>時間</th>
+              <th>行程</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+
+            <tr>
+
+              <td class="time">
+                07:00 - 08:30
+              </td>
+
+              <td class="activity">
+                吃早餐
+              </td>
+
+              <td class="location">
+                飯店二樓
+              </td>
+
+              <td class="note">
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                08:30 - 11:30
+              </td>
+
+              <td class="activity">
+                探索淺草、吃小吃
+              </td>
+
+              <td class="location">
+                淺草寺祭拜、雷門、五重塔、仲見街
+              </td>
+
+              <td class="note">
+                全步行
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                11:30 - 13:00
+              </td>
+
+              <td class="activity">
+                午餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/FpiX2tqnYEyosUWz6"
+                  target="_blank"
+                >
+                  文字燒 Tsukishima Monja Okoge
+                </a>
+
+              </td>
+
+              <td class="note">
+                步行至餐廳
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                13:00 - 14:20
+              </td>
+
+              <td class="activity">
+                致富之路
+              </td>
+
+              <td class="location">
+                小網神社 (洗錢)
+              </td>
+
+              <td class="note">
+                包車 (車程約 15 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                14:20 - 15:30
+              </td>
+
+              <td class="activity">
+                下午茶＋知名地標（東京鐵塔）
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/oiqwCRfmZ3qnwpZr7"
+                  target="_blank"
+                >
+                  水果千層 Harbs
+                </a>
+
+              </td>
+
+              <td class="note">
+                包車 (車程約 20 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                15:30 - 17:30
+              </td>
+
+              <td class="activity">
+                日本第一大鳥居
+              </td>
+
+              <td class="location">
+                明治神宮
+              </td>
+
+              <td class="note">
+                包車 (車程約 30 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                17:30 - 19:00
+              </td>
+
+              <td class="activity">
+                吃晚餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/d7q15EiNML1iRJDc8"
+                  target="_blank"
+                >
+                  阿夫利拉麵 AFURI
+                </a>
+
+              </td>
+
+              <td class="note">
+                步行約 10 分鐘
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                19:00 - 21:00
+              </td>
+
+              <td class="activity">
+                伴手禮大採購
+              </td>
+
+              <td class="location">
+                東京車站/地下街
+              </td>
+
+              <td class="note">
+                步行
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                21:00 - 21:25
+              </td>
+
+              <td class="activity">
+                返回飯店
+              </td>
+
+              <td class="location">
+                飯店
+              </td>
+
+              <td class="note">
+                包車 (車程約 25 分鐘)
+              </td>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- 純圖片展示區 -->
+
+      <div class="pure-gallery">
+
+        <img src="image/day3_cake.png" alt="水果千層蛋糕">
+
+        <img src="image/day3_images.jpeg" alt="東京街景">
+
+        <img src="image/day3_photo01.jpg" alt="東京景點">
+
+        <img src="image/day3_Senso-ji_Kaminarimon_201503a.jpg" alt="雷門">
+
+        <img src="image/day3_Tokyo---2025-06-18_060.jpg" alt="東京">
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Day 4
+    ========================== -->
+
+    <section id="day4" class="section">
+
+      <h2>第四天 - 回到過去</h2>
+
+
+      <div class="table-container">
+
+        <table class="schedule">
+
+          <thead>
+
+            <tr>
+              <th>時間</th>
+              <th>行程</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+
+            <tr>
+
+              <td class="time">
+                07:00 - 08:30
+              </td>
+
+              <td class="activity">
+                吃早餐
+              </td>
+
+              <td class="location">
+                飯店二樓
+              </td>
+
+              <td class="note">
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                08:30 - 11:00
+              </td>
+
+              <td class="activity">
+                深入日本第二大尊佛像
+              </td>
+
+              <td class="location">
+                鎌倉大佛高德院
+              </td>
+
+              <td class="note">
+                包車 (車程約 90 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                11:00 - 12:45
+              </td>
+
+              <td class="activity">
+                吃午餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/hRVkv2zGzJpU9uPd9"
+                  target="_blank"
+                >
+                  鎌倉必吃吻仔魚 Kawagoeya
+                </a>
+
+              </td>
+
+              <td class="note">
+                包車 (車程約 15 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                12:45 - 15:00
+              </td>
+
+              <td class="activity">
+                飯後甜點＋散步消化＋採買伴手禮
+              </td>
+
+              <td class="location">
+                小町通商店街＋鶴崗八幡宮
+              </td>
+
+              <td class="note">
+                包車 (車程約 5 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                15:00 - 18:00
+              </td>
+
+              <td class="activity">
+                古城巡禮＋夕陽餘暉
+              </td>
+
+              <td class="location">
+                江之島
+              </td>
+
+              <td class="note">
+                包車 (車程約 35 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                18:00 - 19:30
+              </td>
+
+              <td class="activity">
+                返回飯店
+              </td>
+
+              <td class="location">
+                車上補眠
+              </td>
+
+              <td class="note">
+                包車 (車程約 90 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                19:30 - 21:00
+              </td>
+
+              <td class="activity">
+                吃晚餐
+              </td>
+
+              <td class="location">
+
+                <a
+                  href="https://maps.app.goo.gl/XRmvB9KgB66UUwwSA"
+                  target="_blank"
+                >
+                  火鍋 Mo-Mo-Paradise
+                </a>
+
+              </td>
+
+              <td class="note">
+                包車 (車程約 15 分鐘)
+              </td>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- 純圖片展示區 -->
+
+      <div class="pure-gallery">
+
         <img
-          class="travel-img"
-          src="image/hotel_spot_shopping_street.png"
-          alt="仲見世商店街"
+          src="image/day4_鶴岡八幡宮20190626-P1030317.jpg"
+          alt="鶴岡八幡宮"
         >
-      </figure>
-      <!-- 晴空塔 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>晴空塔</strong>
-          <span>車程約 10 分鐘 / 步行約 25 分鐘</span>
-        </figcaption>
+
         <img
-          class="travel-img"
-          src="image/spot_skytree.jpg"
-          alt="晴空塔"
+          src="image/day4_howtoenjoy-02.jpg.jxl"
+          alt="鎌倉景點"
         >
-      </figure>
-      <!-- 隅田公園 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>隅田公園（賞楓,銀杏）</strong>
-          <span>步行約 15 分鐘</span>
-        </figcaption>
+
         <img
-          class="travel-img"
-          src="image/spot_park.jpg"
-          alt="隅田公園"
+          src="image/day4_images.jpeg"
+          alt="鎌倉"
         >
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- =========================
-     Day 1
-========================== -->
-<section id="day1" class="section">
-
-  <h2>第一天 - 空降東京</h2>
-
-  <table class="schedule">
-
-    <thead>
-      <tr>
-        <th>時間</th>
-        <th>行程</th>
-        <th>地點</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr>
-        <td class="time">08:30</td>
-        <td class="activity">集合＋報到＋托運行李</td>
-        <td class="location">桃園機場第一航廈</td>
-        <td class="note"></td>
-      </tr>
-
-      <tr>
-        <td class="time">10:40 - 15:05</td>
-        <td class="activity">搭飛機</td>
-        <td class="location">桃園機場 - 成田機場</td>
-        <td class="note">星宇（含飛機餐，3 hr 25 min）</td>
-      </tr>
-
-      <tr>
-        <td class="time">15:05 - 16:20</td>
-        <td class="activity">入境日本＋拿行李</td>
-        <td class="location">成田機場第二航廈</td>
-        <td class="note"></td>
-      </tr>
-
-      <tr>
-        <td class="time">16:20 - 17:20</td>
-        <td class="activity">前往飯店</td>
-        <td class="location">成田機場 - 淺草中央酒店</td>
-        <td class="note">車程約 1 小時</td>
-      </tr>
-
-      <tr>
-        <td class="time">17:20 - 17:50</td>
-        <td class="activity">放行李＋稍作休息</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/em9LS77c5fdCX7G39"
-            target="_blank"
-          >
-            淺草中央酒店
-          </a>
-        <td class="note"></td>
-      </tr>
-
-      <tr>
-        <td class="time">17:50 - 19:30</td>
-        <td class="activity">晚餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/k6tCW8Mek6g8TV4P7"
-            target="_blank"
-          >
-            豬排店 Tonkatsu Toyama
-          </a>
-        </td>
-        <td class="note">距飯店步行 10 分鐘</td>
-      </tr>
-
-      <tr>
-        <td class="time">19:30 - 21:00</td>
-        <td class="activity">逛街、欣賞市容</td>
-        <td class="location">淺草寺＋超市</td>
-        <td class="note">都是步行，慢慢晃回飯店</td>
-      </tr>
-
-    </tbody>
-
-  </table>
-
-
-</section>
-<!-- =========================
-     Day 2
-========================== -->
-<section id="day2" class="section">
-  <h2>第二天 - 富士山</h2>
-
-  <table class="schedule">
-
-    <thead>
-      <tr>
-        <th>時間</th>
-        <th>行程</th>
-        <th>地點</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr>
-        <td class="time">06:50</td>
-        <td class="activity">集合</td>
-        <td class="location">飯店大廳</td>
-        <td class="note">早餐外帶</td>
-      </tr>
-
-      <tr>
-        <td class="time">07:00 - 09:30</td>
-        <td class="activity">富士山取景點1</td>
-        <td class="location">飯店 - 新倉山淺間公園</td>
-        <td class="note">包車 (車程約 120 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">09:30 - 09:45</td>
-        <td class="activity">前往纜車</td>
-        <td class="location">新倉山淺間公園 - 富士山纜車（山腳）</td>
-        <td class="note">包車 (車程約 15 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">09:45 - 13:00</td>
-        <td class="activity">排隊搭纜車</td>
-        <td class="location">河口湖纜車 (來回)</td>
-        <td class="note">可憐的腿</td>
-      </tr>
-
-      <tr>
-        <td class="time">13:00 - 14:30</td>
-        <td class="activity">午餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/HetTs7D1qXvDTVjd8"
-            target="_blank"
-          >
-            餺飥藏 （山梨縣名產＿不動麵）
-          </a>
-        <td class="note">包車 (車程約 10 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">14:30 - 15:30</td>
-        <td class="activity">富士山取景點2＋採買伴手禮</td>
-        <td class="location">大石公園 / 河口湖生活館</td>
-        <td class="note">包車 (車程約 10 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">15:30 - 17:30</td>
-        <td class="activity">觀賞自然奇景＋吃點心</td>
-        <td class="location">忍野八海</td>
-        <td class="note">包車 (車程約 30 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">17:30 - 20:10</td>
-        <td class="activity">車上補眠</td>
-        <td class="location">車上</td>
-        <td class="note">包車 (車程約 160 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">20:10 - 21:30</td>
-        <td class="activity">晚餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/auGc1QMjdErZxuWNA"
-            target="_blank"
-          >
-            漢堡排 Monblanc
-          </a>
-        <td class="note">距飯店步行 2 分鐘</td>
-      </tr>
-
-    </tbody>
-
-  </table>
-
-  <!-- 純圖片展示區 -->
-  <div class="pure-gallery">
-    <img src="image/day2_mt.fuji.jpeg" alt="照片1">
-    <img src="image/day2_Houtou.jpg" alt="照片2">
-    <img src="image/day2_新倉山淺間.jpeg" alt="照片3">
-    <img src="image/day2_忍野八海.jpg" alt="照片4">
-    <img src="image/day2_5-2.jpg" alt="照片5">
-  </div>
-</section>
-<!-- =========================
-     Day 3
-========================== -->
-<section id="day3" class="section">
-  <h2>第三天 - 市區觀光</h2>
-
-  <table class="schedule">
-
-    <thead>
-      <tr>
-        <th>時間</th>
-        <th>行程</th>
-        <th>地點</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr>
-        <td class="time">07:00 - 08:30</td>
-        <td class="activity">吃早餐</td>
-        <td class="location">飯店二樓</td>
-        <td class="note"></td>
-      </tr>
-
-      <tr>
-        <td class="time">08:30 - 11:30</td>
-        <td class="activity">探索淺草、吃小吃</td>
-        <td class="location">淺草寺祭拜、雷門、五重塔、仲見街</td>
-        <td class="note">全步行</td>
-      </tr>
-      
-      <tr>
-        <td class="time">11:30 - 13:00</td>
-        <td class="activity">午餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/FpiX2tqnYEyosUWz6"
-            target="_blank"
-          >
-            文字燒 Tsukishima Monja Okoge
-          </a>
-        </td>
-        <td class="note">步行至餐廳</td>
-      </tr>
-
-      <tr>
-        <td class="time">13:00 - 14:20</td>
-        <td class="activity">致富之路</td>
-        <td class="location">小網神社 (洗錢)</td>
-        <td class="note">包車 (車程約 15 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">14:20 - 15:30</td>
-        <td class="activity">下午茶＋知名地標（東京鐵塔）</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/oiqwCRfmZ3qnwpZr7"
-            target="_blank"
-          >
-            水果千層 Harbs
-          </a>
-        </td>
-        <td class="note">包車 (車程約 20 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">15:30 - 17:30</td>
-        <td class="activity">日本第一大鳥居</td>
-        <td class="location">明治神宮</td>
-        <td class="note">包車 (車程約 30 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">17:30 - 19:00</td>
-        <td class="activity">吃晚餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/d7q15EiNML1iRJDc8"
-            target="_blank"
-          >
-            阿夫利拉麵 AFURI
-          </a>
-        </td>
-        <td class="note">步行約 10 分鐘</td>
-      </tr>
-
-      <tr>
-        <td class="time">19:00 - 21:00</td>
-        <td class="activity">伴手禮大採購</td>
-        <td class="location">東京車站/地下街</td>
-        <td class="note">步行</td>
-      </tr> 
-
-      <tr>
-        <td class="time">21:00 - 21:25</td>
-        <td class="activity">返回飯店</td>
-        <td class="location">飯店</td>
-        <td class="note">包車 (車程約 25 分鐘)</td>
-      </tr> 
-
-    </tbody>
-
-  </table>
-
-  <!-- 純圖片展示區 -->
-  <div class="pure-gallery">
-    <img src="image/day3_cake.png" alt="照片1">
-    <img src="image/day3_images.jpeg" alt="照片2">
-    <img src="image/day3_photo01.jpg" alt="照片3">
-    <img src="image/day3_Senso-ji_Kaminarimon_201503a.jpg" alt="照片4">
-    <img src="image/day3_Tokyo---2025-06-18_060.jpg" alt="照片5">
-  </div>
-</section>
-<!-- =========================
-     Day 4
-========================== -->
-<section id="day4" class="section">
-  <h2>第四天 - 回到過去</h2>
-  <table class="schedule">
-
-    <thead>
-      <tr>
-        <th>時間</th>
-        <th>行程</th>
-        <th>地點</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr>
-        <td class="time">07:00 - 08:30</td>
-        <td class="activity">吃早餐</td>
-        <td class="location">飯店二樓</td>
-        <td class="note"></td>
-      </tr>
-
-      <tr>
-        <td class="time">08:30 - 11:00</td>
-        <td class="activity">深入日本第二大尊佛像</td>
-        <td class="location">鎌倉大佛高德院</td>
-        <td class="note">包車(車程約 90 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">11:00 - 12:45</td>
-        <td class="activity">吃午餐</td>
-        <td class="location">
-          <a
-            href="https://maps.app.goo.gl/hRVkv2zGzJpU9uPd9"
-            target="_blank"
-          >
-            鎌倉必吃吻仔魚 Kawagoeya
-          </a>
-        </td>
-        <td class="note">包車 (車程約 15 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">12:45 - 15:00</td>
-        <td class="activity">飯後甜點＋散步消化＋採買伴手禮</td>
-        <td class="location">小町通商店街＋鶴崗八幡宮</td>
-        <td class="note">包車 (車程約 5 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">15:00 - 18:00</td>
-        <td class="activity">古城巡禮＋夕陽餘暉</td>
-        <td class="location">江之島</td>
-        <td class="note">包車 (車程約 35 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">18:00 - 19:30</td>
-        <td class="activity">返回飯店</td>
-        <td class="location">車上補眠</td>
-        <td class="note">包車 (車程約 90 分鐘)</td>
-      </tr> 
-
-      <tr>
-        <td class="time">19:30 - 21:00</td>
-        <td class="activity">吃晚餐</td>
-         <td class="location">
-          <a
-            href="https://maps.app.goo.gl/XRmvB9KgB66UUwwSA"
-            target="_blank"
-          >
-            火鍋 Mo-Mo-Paradise
-          </a>
-        </td>
-        <td class="note">包車 (車程約 15 分鐘)</td>
-      </tr>
-
-    </tbody>
-
-  </table>
-
-  <!-- 純圖片展示區 -->
-  <div class="pure-gallery">
-    <img src="image/day4_鶴岡八幡宮20190626-P1030317.jpg" alt="照片1">
-    <img src="image/day4_howtoenjoy-02.jpg.jxl" alt="照片2">
-    <img src="image/day4_images.jpeg" alt="照片3">
-    <img src="image/day4_lead-img2.png" alt="照片4">
-    <img src="image/day4_Mt._Fuji_from_Hiroyama_park_(Zushi).jpg" alt="照片5">
-  </div>
-</section>
-<!-- =========================
-     Day 5
-========================== -->
-<section id="day5" class="section">
-    <h2>第五天 - 美好的假期怎麼過這麼快</h2>
-
-  <table class="schedule">
-
-    <thead>
-      <tr>
-        <th>時間</th>
-        <th>行程</th>
-        <th>地點</th>
-        <th>備註</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr>
-        <td class="time">07:00 - 09:00</td>
-        <td class="activity">早餐</td>
-        <td class="location">飯店二樓</td>
-        <td class="note">吃完早餐收拾行李</td>
-      </tr>
-
-      <tr>
-        <td class="time">09:00 - 10:45</td>
-        <td class="activity">最終採買機會</td>
-        <td class="location">飯店周邊</td>
-        <td class="note">不需採買的人可以多睡一下</td>
-      </tr>
-
-      <tr>
-        <td class="time">10:45 - 12:05</td>
-        <td class="activity">前往成田機場</td>
-        <td class="location">飯店 - 成田機場</td>
-        <td class="note">包車 (車程約 80 分鐘)</td>
-      </tr>
-
-      <tr>
-        <td class="time">12:05 - 14:10</td>
-        <td class="activity">午餐</td>
-        <td class="location">機場美食街</td>
-        <td class="note">午餐自理</td>
-      </tr>
-
-      <tr>
-        <td class="time">14:10 - 16:50</td>
-        <td class="activity">搭飛機</td>
-        <td class="location">成田機場 第二航廈 - 桃園機場 第一航廈</td>
-        <td class="note">航程 3 小時 40 分鍾</td>
-      </tr>
-
-    </tbody>
-
-  </table>
-</section>
-<!-- =========================
-     行前通知
-========================== -->
-<section id="transport" class="section">
-  <h2>行前通知</h2>
-  <ul>
-    <li>務必攜帶護照、個人藥品、牙刷牙膏毛巾</li>
-    <li>富士山上溫度大約15度，建議攜帶保暖外套</li>
-    <li>每人準備3~5萬日圓現金</li>
-  </ul>
-</section>
+
+        <img
+          src="image/day4_lead-img2.png"
+          alt="鎌倉景點"
+        >
+
+        <img
+          src="image/day4_Mt._Fuji_from_Hiroyama_park_(Zushi).jpg"
+          alt="富士山"
+        >
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         Day 5
+    ========================== -->
+
+    <section id="day5" class="section">
+
+      <h2>第五天 - 美好的假期怎麼過這麼快</h2>
+
+
+      <div class="table-container">
+
+        <table class="schedule">
+
+          <thead>
+
+            <tr>
+              <th>時間</th>
+              <th>行程</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+
+            <tr>
+
+              <td class="time">
+                07:00 - 09:00
+              </td>
+
+              <td class="activity">
+                早餐
+              </td>
+
+              <td class="location">
+                飯店二樓
+              </td>
+
+              <td class="note">
+                吃完早餐收拾行李
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                09:00 - 10:45
+              </td>
+
+              <td class="activity">
+                最終採買機會
+              </td>
+
+              <td class="location">
+                飯店周邊
+              </td>
+
+              <td class="note">
+                不需採買的人可以多睡一下
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                10:45 - 12:05
+              </td>
+
+              <td class="activity">
+                前往成田機場
+              </td>
+
+              <td class="location">
+                飯店 - 成田機場
+              </td>
+
+              <td class="note">
+                包車 (車程約 80 分鐘)
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                12:05 - 14:10
+              </td>
+
+              <td class="activity">
+                午餐
+              </td>
+
+              <td class="location">
+                機場美食街
+              </td>
+
+              <td class="note">
+                午餐自理
+              </td>
+
+            </tr>
+
+
+            <tr>
+
+              <td class="time">
+                14:10 - 16:50
+              </td>
+
+              <td class="activity">
+                搭飛機
+              </td>
+
+              <td class="location">
+                成田機場 第二航廈 - 桃園機場 第一航廈
+              </td>
+
+              <td class="note">
+                航程 3 小時 40 分鐘
+              </td>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         行前通知
+    ========================== -->
+
+    <section id="transport" class="section">
+
+      <h2>行前通知</h2>
+
+      <ul>
+
+        <li>
+          務必攜帶護照、個人藥品、牙刷牙膏毛巾
+        </li>
+
+        <li>
+          富士山上溫度大約15度，建議攜帶保暖外套
+        </li>
+
+        <li>
+          每人準備3~5萬日圓現金
+        </li>
+
+      </ul>
+
+    </section>
+
+
   </main>
+
+
   <!-- =========================
        JavaScript
   ========================== -->
- <script>
+
+  <script>
+
     function showSection(id, btnElement) {
 
-      // 切換內容
-      const sections = document.querySelectorAll('.section');
+      /* =========================
+         1. 切換內容區塊
+      ========================== */
+
+      const sections =
+        document.querySelectorAll('.section');
 
       sections.forEach(section => {
         section.classList.remove('active');
       });
 
-      const target = document.getElementById(id);
+
+      const target =
+        document.getElementById(id);
 
       if (target) {
         target.classList.add('active');
       }
 
-      // 清除所有按鈕的 active
-      const buttons = document.querySelectorAll('nav button');
+
+      /* =========================
+         2. 清除所有按鈕的 active
+      ========================== */
+
+      const buttons =
+        document.querySelectorAll('nav button');
 
       buttons.forEach(btn => {
         btn.classList.remove('active');
       });
 
-      // 讓目前點擊的按鈕保持變色
+
+      /* =========================
+         3. 讓目前點擊的按鈕保持變色
+      ========================== */
+
       if (btnElement) {
         btnElement.classList.add('active');
       }
+
     }
 
-    // 網頁剛開啟時，預設選中「住宿地點」
-    window.addEventListener('DOMContentLoaded', function() {
-      const hotelButton = document.querySelector(
-        'nav button[onclick*="hotel"]'
-      );
 
-      if (hotelButton) {
-        hotelButton.classList.add('active');
+    /* =========================
+       網頁開啟時
+       預設選中「住宿地點」
+    ========================== */
+
+    window.addEventListener(
+      'DOMContentLoaded',
+      function () {
+
+        const hotelButton =
+          document.querySelector(
+            'nav button[onclick*="hotel"]'
+          );
+
+        if (hotelButton) {
+          hotelButton.classList.add('active');
+        }
+
       }
-    });
+    );
+
   </script>
+
+
 </body>
 </html>

@@ -426,7 +426,7 @@
     <button onclick="showSection('rules', this)">
       旅遊公約
     </button>
-    <button class="active" onclick="showSection('hotel', this)">
+    <button onclick="showSection('hotel', this)">
       住宿地點
     </button>
     <button onclick="showSection('day1', this)">
@@ -1061,29 +1061,28 @@
   <!-- =========================
        JavaScript
   ========================== -->
-  <script>
-  function showSection(id, btnElement) {
-    // 1. 切換下方內容顯示
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-      section.classList.remove('active');
-    });
+ <script>
+    function showSection(id, btnElement) {
+      // 1. 切換下方內容區塊
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+      }
 
-    const target = document.getElementById(id);
-    if (target) {
-      target.classList.add('active');
+      // 2. 切換按鈕顏色：把所有按鈕的變色全部清空，只讓當前點擊的變色
+      const buttons = document.querySelectorAll('nav button');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      if (btnElement) {
+        btnElement.classList.add('active');
+      }
     }
-
-    // 2. 切換按鈕變色（先全部清除顏色，只讓點擊的按鈕亮起）
-    const buttons = document.querySelectorAll('nav button');
-    buttons.forEach(btn => {
-      btn.classList.remove('active');
-    });
-
-    if (btnElement) {
-      btnElement.classList.add('active');
-    }
-  }
-</script>
+  </script>
 </body>
 </html>

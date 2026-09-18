@@ -1062,19 +1062,28 @@
        JavaScript
   ========================== -->
   <script>
-    function showSection(id) {
-      // 找到所有 section
-      const sections = document.querySelectorAll('.section');
-      // 全部隱藏
-      sections.forEach(section => {
-        section.classList.remove('active');
-      });
-      // 顯示使用者點擊的 section
-      const target = document.getElementById(id);
-      if (target) {
-        target.classList.add('active');
-      }
+  function showSection(id, btnElement) {
+    // 1. 切換下方內容顯示
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+      section.classList.remove('active');
+    });
+
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
     }
-  </script>
+
+    // 2. 切換按鈕變色（先全部清除顏色，只讓點擊的按鈕亮起）
+    const buttons = document.querySelectorAll('nav button');
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    if (btnElement) {
+      btnElement.classList.add('active');
+    }
+  }
+</script>
 </body>
 </html>

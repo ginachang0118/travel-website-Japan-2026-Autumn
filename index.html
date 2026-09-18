@@ -365,18 +365,40 @@
     }
 
     /* =========================
-      每日行程照片集
+      純圖片相簿區塊
     ========================= */
-    .day-gallery {
-      margin-top: 30px;
-      border-top: 1px solid #e0e0e0;
+    .pure-gallery {
+      display: grid;
+      /* 自動換行，每張圖片寬度至少 160px，不足時自適應填滿 */
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 25px;
       padding-top: 20px;
+      border-top: 1px solid #e5e5e5;
     }
-    .day-gallery h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      color: #2c3e50;
-      font-size: 18px;
+
+    .pure-gallery img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .pure-gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 手機版設定 (小於 600px) */
+    @media (max-width: 600px) {
+      .pure-gallery {
+        grid-template-columns: repeat(2, 1fr); /* 手機上一列兩張 */
+        gap: 8px;
+      }
+      .pure-gallery img {
+        height: 120px;
+      }
     }
   </style>
 </head>
@@ -737,45 +759,17 @@
 
   </table>
 
-  <!-- ▼▼▼ 第二天照片集 ▼▼▼ -->
-  <div class="day-gallery">
-    <div class="spot-gallery">
-      
-      <!-- 照片 1：新倉山淺間公園 -->
-      <figure class="spot-item">
-        <img class="travel-img" src="day2_mt.fuji.jpeg" alt="新倉山淺間公園">
-      </figure>
-
-      <!-- 照片 2：河口湖纜車 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>河口湖纜車</strong>
-          <span>天上山公園俯瞰湖景</span>
-        </figcaption>
-        <img class="travel-img" src="image/day2_ropeway.jpg" alt="河口湖纜車">
-      </figure>
-
-      <!-- 照片 3：大石公園 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>大石公園</strong>
-          <span>湖畔花海與富士山</span>
-        </figcaption>
-        <img class="travel-img" src="image/day2_oishi_park.jpg" alt="大石公園">
-      </figure>
-
-      <!-- 照片 4：忍野八海 -->
-      <figure class="spot-item">
-        <figcaption>
-          <strong>忍野八海</strong>
-          <span>清澈湧泉奇景</span>
-        </figcaption>
-        <img class="travel-img" src="image/day2_oshino.jpg" alt="忍野八海">
-      </figure>
-
-    </div>
+  <!-- 純圖片展示區 -->
+  <div class="pure-gallery">
+    <img src="image/day2_mt.fuji.jpeg" alt="照片1">
+    <img src="image/day2_2.jpg" alt="照片2">
+    <img src="image/day2_3.jpg" alt="照片3">
+    <img src="image/day2_4.jpg" alt="照片4">
+    <img src="image/day2_5.jpg" alt="照片5">
+    <img src="image/day2_6.jpg" alt="照片6">
+    <img src="image/day2_7.jpg" alt="照片7">
+    <img src="image/day2_8.jpg" alt="照片8">
   </div>
-  <!-- ▲▲▲ 第二天照片集結束 ▲▲▲ -->
 </section>
 <!-- =========================
      Day 3

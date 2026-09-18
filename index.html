@@ -1063,26 +1063,43 @@
   ========================== -->
  <script>
     function showSection(id, btnElement) {
-      // 1. 切換下方內容區塊
+
+      // 切換內容
       const sections = document.querySelectorAll('.section');
+
       sections.forEach(section => {
         section.classList.remove('active');
       });
+
       const target = document.getElementById(id);
+
       if (target) {
         target.classList.add('active');
       }
 
-      // 2. 切換按鈕顏色：把所有按鈕的變色全部清空，只讓當前點擊的變色
+      // 清除所有按鈕的 active
       const buttons = document.querySelectorAll('nav button');
+
       buttons.forEach(btn => {
         btn.classList.remove('active');
       });
 
+      // 讓目前點擊的按鈕保持變色
       if (btnElement) {
         btnElement.classList.add('active');
       }
     }
+
+    // 網頁剛開啟時，預設選中「住宿地點」
+    window.addEventListener('DOMContentLoaded', function() {
+      const hotelButton = document.querySelector(
+        'nav button[onclick*="hotel"]'
+      );
+
+      if (hotelButton) {
+        hotelButton.classList.add('active');
+      }
+    });
   </script>
 </body>
 </html>
